@@ -1,0 +1,47 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.11'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id 'com.google.cloud.tools.appengine' version '2.4.4'
+}
+
+group = 'co.latelier'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+	gradlePluginPortal()
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+	implementation "com.fasterxml.jackson.core:jackson-core"
+	implementation "com.fasterxml.jackson.core:jackson-databind"
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'junit:junit'
+	compileOnly "org.projectlombok:lombok"
+	testCompileOnly "org.projectlombok:lombok"
+	annotationProcessor "org.projectlombok:lombok"
+	testAnnotationProcessor "org.projectlombok:lombok"
+}
+
+apply plugin: 'java'
+apply plugin: 'com.google.cloud.tools.appengine'
+
+appengine {
+	deploy {
+		projectId = 'GCLOUD_CONFIG'
+		version = 'GCLOUD_CONFIG'
+		stopPreviousVersion = true  // default - stop the current version
+		promote = true// default - & make this the current version
+	}
+}
+
+
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
